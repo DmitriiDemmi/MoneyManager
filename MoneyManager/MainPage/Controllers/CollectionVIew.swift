@@ -58,14 +58,36 @@ class CollectionView: UIViewController, UICollectionViewDelegateFlowLayout {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(collectionView)
         
+        title = "Категории"
+        navigationItem.largeTitleDisplayMode = .never
+        view.backgroundColor = .white
+        
+        let balanceView = BalanceView.makeView(style: .full, viewContext: context)
+        balanceView.layer.shadowColor = UIColor.white.cgColor
+        balanceView.layer.masksToBounds = false
+        balanceView.layer.shadowOffset = CGSize(width: 0.0 , height: 10)
+        balanceView.layer.shadowOpacity = 1
+        balanceView.layer.shadowRadius = 5
+        
+        view.addSubview(balanceView)
+        balanceView.easy.layout([Top(20).to(view.safeAreaLayoutGuide, .top),
+                                      Left(),
+                                      Right(),
+                                      Height(BalanceView.heightForFull)])
+        
+       
+        collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: CollectionViewCell.reuseId)
         collectionView.dataSource = self
         collectionView.delegate = self
-
-        collectionView.easy.layout([Top(),Left(),Right(),Bottom().to(view.safeAreaLayoutGuide, .bottom)])
         collectionView.backgroundColor = .white
-        collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: CollectionViewCell.reuseId)
+        collectionView.contentInset = UIEdgeInsets(top: 15.0, left: 0.0, bottom: 0.0, right: 0.0)
+        
+        view.insertSubview(collectionView, belowSubview: balanceView)
+        collectionView.easy.layout([Top().to(balanceView),
+                                    Left(),
+                                    Right(),
+                                    Bottom(0).to(view.safeAreaLayoutGuide, .bottom)])
         
         setupNavigationItem()
         fetchData()
@@ -146,7 +168,7 @@ class CollectionView: UIViewController, UICollectionViewDelegateFlowLayout {
             ofKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: CollectionViewSectionHeader.identifier,
             for: indexPath) as! CollectionViewSectionHeader
-        
+
         if indexPath.section == 0 {
             header.costsTitle.text = "Доходы"
         }
@@ -154,7 +176,7 @@ class CollectionView: UIViewController, UICollectionViewDelegateFlowLayout {
         if indexPath.section == 1{
             header.costsTitle.text = "Расходы"
         }
-        
+
         header.backgroundColor = UIColor(red: 0.94, green: 0.93, blue: 1, alpha: 1)
         header.configureCostsTitle()
         return header

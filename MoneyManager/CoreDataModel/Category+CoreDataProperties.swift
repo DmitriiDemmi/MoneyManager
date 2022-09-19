@@ -19,6 +19,7 @@ extension Category {
     @NSManaged public var categoryID: UUID?
     @NSManaged public var categoryTitle: String?
     @NSManaged public var imageName: String
+    @NSManaged public var isIncome: Bool
     @NSManaged public var sections: Section?
     @NSManaged public var transactions: [Transaction]?
 

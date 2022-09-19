@@ -28,48 +28,56 @@ func setupData() {
         category.categoryTitle = "Зарплата"
         category.categoryID = UUID()
         category.imageName = "9"
+        category.isIncome = true
         
         let category2 = NSEntityDescription.insertNewObject(forEntityName: "Category", into: context) as! Category
         category2.sections = incomeSection
         category2.categoryTitle = "Дивиденды"
         category2.categoryID = UUID()
         category2.imageName = "6"
+        category2.isIncome = true
         
         let category3 = NSEntityDescription.insertNewObject(forEntityName: "Category", into: context) as! Category
         category3.sections = costsSection
         category3.categoryTitle = "Фитнес"
         category3.categoryID = UUID()
         category3.imageName = "27"
+        category3.isIncome = false
         
         let category4 = NSEntityDescription.insertNewObject(forEntityName: "Category", into: context) as! Category
         category4.sections = costsSection
         category4.categoryTitle = "Продукты"
         category4.categoryID = UUID()
         category4.imageName = "7"
+        category4.isIncome = false
         
         let category5 = NSEntityDescription.insertNewObject(forEntityName: "Category", into: context) as! Category
         category5.sections = costsSection
         category5.categoryTitle = "Кафе"
         category5.categoryID = UUID()
         category5.imageName = "24"
+        category5.isIncome = false
         
         let category6 = NSEntityDescription.insertNewObject(forEntityName: "Category", into: context) as! Category
         category6.sections = costsSection
         category6.categoryTitle = "Досуг"
         category6.categoryID = UUID()
         category6.imageName = "4"
+        category6.isIncome = false
         
         let category7 = NSEntityDescription.insertNewObject(forEntityName: "Category", into: context) as! Category
         category7.sections = costsSection
         category7.categoryTitle = "Транспорт"
         category7.categoryID = UUID()
         category7.imageName = "21"
+        category7.isIncome = false
         
         let category8 = NSEntityDescription.insertNewObject(forEntityName: "Category", into: context) as! Category
         category8.sections = costsSection
         category8.categoryTitle = "Красота"
         category8.categoryID = UUID()
         category8.imageName = "17"
+        category8.isIncome = false
         
         do {
             try context.save()
