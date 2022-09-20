@@ -40,8 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UNUserNotificationCenter.current().delegate = self
         
-        NotificationsService.scheduleNotification(timeInterval: 20, title: "title", body: "body")
-        
         return true
     }
 
