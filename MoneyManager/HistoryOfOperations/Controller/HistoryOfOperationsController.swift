@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import EasyPeasy
 
 class HistoryOfOperationsController: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate {
 
@@ -38,15 +39,31 @@ class HistoryOfOperationsController: UIViewController, UITableViewDelegate, UITa
         navigationItem.searchController = searchController
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Введите название категории"
+        searchController.searchBar.placeholder = "Поиск"
     }
 
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        view.addSubview(tableView)
-        tableView.backgroundColor = .white
+
+        navigationItem.title = "История транзакций"
+        navigationItem.largeTitleDisplayMode = .never
+        view.backgroundColor = .white
         
+        let balanceView = BalanceView.makeView(style: .short, viewContext: context)
+        view.addSubview(balanceView)
+        balanceView.easy.layout([Top(15).to(view.safeAreaLayoutGuide, .top),
+                                      Left(),
+                                      Right(),
+                                      Height(BalanceView.heightForShort)])
+        
+        view.addSubview(tableView)
+        tableView.easy.layout([Top().to(balanceView),
+                                    Left(),
+                                    Right(),
+                                    Bottom().to(view.safeAreaLayoutGuide, .bottom)])
+
+        tableView.backgroundColor = .white
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -54,10 +71,7 @@ class HistoryOfOperationsController: UIViewController, UITableViewDelegate, UITa
         tableView.register(HistoryOfOperationsSectionHeader.self, forHeaderFooterViewReuseIdentifier: HistoryOfOperationsSectionHeader.reuseid)
         
         tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-        
-        navigationItem.title = "История транзакций"
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
+
         setupSearchController()
         loadSavedData()
     }
@@ -65,11 +79,6 @@ class HistoryOfOperationsController: UIViewController, UITableViewDelegate, UITa
     
     override func viewWillAppear(_ animated: Bool) {
         loadSavedData()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        tableView.frame = view.bounds
     }
     
     func loadSavedData() {

@@ -15,6 +15,7 @@ extension CollectionView: AddCategoryVcDelegate {
         category.categoryTitle = categoryName
         category.categoryID = UUID()
         category.imageName = image
+        category.isIncome = true
         
         do {
             try context.save()
@@ -31,6 +32,7 @@ extension CollectionView: AddCategoryVcDelegate {
         category.categoryTitle = categoryName
         category.categoryID = UUID()
         category.imageName = image
+        category.isIncome = false
        
         do {
             try context.save()

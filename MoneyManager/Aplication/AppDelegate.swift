@@ -25,8 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaults.standard.set(true, forKey: "launchedBefore")
         }
 
-        let controller = TabBarController()
-        window?.rootViewController = UINavigationController(rootViewController: controller)
+        window?.rootViewController = TabBarController()
         
         return true
     }
