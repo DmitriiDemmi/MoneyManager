@@ -25,7 +25,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaults.standard.set(true, forKey: "launchedBefore")
         }
 
+        NotificationsService.requestAuthorization { result, error in
+            guard !result else { return }
+            
+            let errorMessage = error?.localizedDescription ?? "Ошибка подключения уведомлений"
+            
+            let alert = UIAlertController(title: "Не подключаются уведомления", message: errorMessage, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            
+            self.window?.rootViewController?.present(alert, animated: true)
+        }
+
         window?.rootViewController = TabBarController()
+        
+        UNUserNotificationCenter.current().delegate = self
+        
+        NotificationsService.scheduleNotification(timeInterval: 20, title: "title", body: "body")
         
         return true
     }
@@ -75,5 +90,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.banner, .badge, .sound])
+    }
+    
 }
 
