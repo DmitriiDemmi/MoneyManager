@@ -13,20 +13,40 @@ struct LoansView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     
     @FetchRequest(
-        entity: LoansCategory.entity(),
+//        entity: LoansCategory.entity(),
         sortDescriptors: [
             NSSortDescriptor(keyPath: \LoansCategory.categoryID, ascending: true)
         ]
     ) var sections: FetchedResults<LoansCategory>
     
     var body: some View {
-        ContentView(categories: sections.compactMap{$0})
+        ContentView(categories: sections.compactMap{$0}) { (category, name, amount, returnDate, image, enableNotification) in
+            saveLoan(category, name, amount, returnDate, image, enableNotification)
+        }
+    }
+    
+    func createLoan(_ category: LoanCategories, _ name: String, _ amount: NSDecimalNumber, _ returnDate: Date, _ image: Data?, _ enableNotification: Bool) -> LoansPerson {
+        let person = NSEntityDescription.insertNewObject(forEntityName: "LoansPerson", into: managedObjectContext) as! LoansPerson
+        person.personID = UUID()
+        person.name = name
+        person.amount = amount
+        person.date = returnDate
+        person.image = nil
+        return person
+    }
+    
+    func saveLoan(_ category: LoanCategories, _ name: String, _ amount: NSDecimalNumber, _ returnDate: Date, _ image: Data?, _ enableNotification: Bool) {
+        let person = createLoan(category, name, amount, returnDate, image, enableNotification)
+        person.category = sections.first(where: { $0.categoryID == category.rawValue})
+        CoreDataService.shared.saveContext(for: .loans)
     }
 }
 
 private struct ContentView: View {
     
     @State var categories: [LoansCategory]
+    
+    var addPerson: ((_ category: LoanCategories, _ name: String, _ amount: NSDecimalNumber, _ returnDate: Date, _ image: Data?, _ enableNotification: Bool) -> Void)?
     
     var body: some View {
         NavigationView {
@@ -48,7 +68,7 @@ private struct ContentView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar { NavigationBarView() }
+            .toolbar { NavigationBarView(addPersonDelegate: addPerson) }
         }
     }
     
@@ -58,10 +78,12 @@ private struct NavigationBarView: View {
     
     @State var isActive = false
     
+    var addPersonDelegate: ((_ category: LoanCategories, _ name: String, _ amount: NSDecimalNumber, _ returnDate: Date, _ image: Data?, _ enableNotification: Bool) -> Void)?
+    
     var body: some View {
         HStack {
             Spacer()
-            NavigationLink(destination: CreateLoanView().environment(\.managedObjectContext, CoreDataService.shared.persistentContainer(for: .loans).viewContext)) {
+            NavigationLink(destination: CreateLoanView(addPersonDelegate: addPersonDelegate)) {
                 HStack {
                     Text("Добавить долг")
                 }
@@ -113,6 +135,8 @@ private struct PersonView: View {
                 .foregroundColor(Color(.sRGB, red: 56/255, green: 58/255, blue: 209/255, opacity: 1))
                 .font(.footnote.weight(.medium))
         }
+        .padding(.top, 8)
+        .padding(.bottom, 20)
     }
     
     func format(_ number: NSNumber?) -> String {
@@ -193,6 +217,6 @@ struct LoansView_Previews: PreviewProvider {
         
         return ContentView(categories: [
             myLoans, myCredits
-        ])
+        ]) { (category, name, amount, returnDate, image, enableNotification) in }
     }
 }

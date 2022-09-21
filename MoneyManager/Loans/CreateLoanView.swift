@@ -10,16 +10,17 @@ import CoreData
 
 struct CreateLoanView: View {
     
-    @Environment(\.managedObjectContext) var managedObjectContext
-    
     @State var loanAmount: String = ""
     @State var personName: String = ""
     @State var returnDate: Date = Date()
+    @State var imageData: Data?
     
     @State var enableNotification = false
     
     @State var showErrorAlert = false
     @State var error: NSError?
+    
+    var addPersonDelegate: ((_ category: LoanCategories, _ name: String, _ amount: NSDecimalNumber, _ returnDate: Date, _ image: Data?, _ enableNotification: Bool) -> Void)?
     
     var body: some View {
         ScrollView(.vertical) {
@@ -32,8 +33,8 @@ struct CreateLoanView: View {
                 )
                 Spacer().frame(width: 0, height: 72)
                 HStack(spacing: 15) {
-                    ActionButton(title: "Я дал") { saveLoan(for: .credits) }
-                    ActionButton(title: "Я взял") { saveLoan(for: .loans) }
+                    ActionButton(title: "Я дал") { addPersonDelegate?(.credits, personName, 0, returnDate, imageData, enableNotification) }
+                    ActionButton(title: "Я взял") { addPersonDelegate?(.loans, personName, 0, returnDate, imageData, enableNotification) }
                 }
                 Spacer()
             }
@@ -42,28 +43,6 @@ struct CreateLoanView: View {
         .navigationTitle(
             Text("Добавить долг")
         )
-    }
-    
-    func createLoan(notification: Bool) -> LoansPerson {
-        let person = NSEntityDescription.insertNewObject(forEntityName: "LoansPerson", into: managedObjectContext) as! LoansPerson
-        person.personID = UUID()
-        person.name = personName
-        person.amount = 0
-        person.date = returnDate
-        person.image = nil
-        return person
-    }
-    
-    func saveLoan(for category: LoanCategories) {
-        let person = createLoan(notification: enableNotification)
-        do {
-            let categories = try managedObjectContext.fetch(NSFetchRequest<LoansCategory>(entityName: "LoansCategory"))
-            person.category = categories.first(where: { $0.categoryID == category.rawValue})
-            try managedObjectContext.save()
-        } catch(let error) {
-            //FIXME: Хорошо бы сделать алерт на эту ошибку
-            print(error)
-        }
     }
     
 }
@@ -169,6 +148,6 @@ struct DSRoundedRectangleTextFieldStyle: TextFieldStyle {
 
 struct CreateLoanView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateLoanView()
+        CreateLoanView() { (category, name, amount, returnDate, image, enableNotification)  in }
     }
 }
