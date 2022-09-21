@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E230" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="LoansCategory" representedClassName="LoansCategory" syncable="YES" codeGenerationType="class">
+        <attribute name="categoryID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="persons" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="LoansPerson" inverseName="category" inverseEntity="LoansPerson"/>
+    </entity>
+    <entity name="LoansPerson" representedClassName="LoansPerson" syncable="YES" codeGenerationType="class">
+        <attribute name="amount" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="image" optional="YES" attributeType="Binary"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="personID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" ordered="YES" destinationEntity="LoansCategory" inverseName="persons" inverseEntity="LoansCategory"/>
+    </entity>
+    <elements>
+        <element name="LoansCategory" positionX="-535.7896728515625" positionY="-75.4580078125" width="128" height="74"/>
+        <element name="LoansPerson" positionX="-281.8681640625" positionY="7.62451171875" width="128" height="119"/>
+    </elements>
+</model>

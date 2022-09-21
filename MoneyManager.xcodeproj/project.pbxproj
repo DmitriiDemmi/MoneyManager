@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		88A4802928D486450013C52E /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A4802828D486450013C52E /* CoreDataService.swift */; };
+		88A4802C28D4881F0013C52E /* LoansDataBase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 88A4802A28D4881F0013C52E /* LoansDataBase.xcdatamodeld */; };
 		C89D0E9228C2275800720A9E /* EasyPeasy in Frameworks */ = {isa = PBXBuildFile; productRef = C89D0E9128C2275800720A9E /* EasyPeasy */; };
 		FB0EF7AB2667860300F2F802 /* CategoryDetailsControllerHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0EF7AA2667860300F2F802 /* CategoryDetailsControllerHeader.swift */; };
 		FB1B5350264D153500270263 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1B534F264D153500270263 /* AppDelegate.swift */; };
@@ -41,6 +43,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		88A4802828D486450013C52E /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
+		88A4802B28D4881F0013C52E /* LoansDataBase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LoansDataBase.xcdatamodel; sourceTree = "<group>"; };
 		FB0EF7AA2667860300F2F802 /* CategoryDetailsControllerHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDetailsControllerHeader.swift; sourceTree = "<group>"; };
 		FB1B534C264D153500270263 /* MoneyManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoneyManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB1B534F264D153500270263 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -143,6 +147,7 @@
 				FB1B534F264D153500270263 /* AppDelegate.swift */,
 				FB1B5351264D153500270263 /* SceneDelegate.swift */,
 				FB1B5358264D153500270263 /* CoreDataTest.xcdatamodeld */,
+				88A4802A28D4881F0013C52E /* LoansDataBase.xcdatamodeld */,
 			);
 			path = Aplication;
 			sourceTree = "<group>";
@@ -193,6 +198,7 @@
 				FB841ADA266E9D430079A45E /* PickerView.swift */,
 				FB39BF99266EA1E100699717 /* CollectionViewDataSource.swift */,
 				FB39BF9C266EA48E00699717 /* CollectionViewAddCategoryVcDelegate.swift */,
+				88A4802828D486450013C52E /* CoreDataService.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -340,6 +346,7 @@
 				FB841AD8266E9CF10079A45E /* TextField.swift in Sources */,
 				FBA6722F2653FD3D00E795CF /* Category+CoreDataClass.swift in Sources */,
 				FBA672312653FD3D00E795CF /* Section+CoreDataProperties.swift in Sources */,
+				88A4802C28D4881F0013C52E /* LoansDataBase.xcdatamodeld in Sources */,
 				FBE3F4E5266F5EEF00A33A6E /* Calculator.swift in Sources */,
 				FB1F8D3B2666283000C7E5B2 /* TableViewCell.swift in Sources */,
 				FBBC4CF4265CCC3700F428E0 /* AddCategoryController.swift in Sources */,
@@ -362,6 +369,7 @@
 				FB841ADB266E9D430079A45E /* PickerView.swift in Sources */,
 				FB999A4C26678049005EDDAE /* CategoryDetailsControllerCell.swift in Sources */,
 				FB56AB7B264E924D000D9F3D /* TapBar.swift in Sources */,
+				88A4802928D486450013C52E /* CoreDataService.swift in Sources */,
 				FBE3F4E9266F5FE800A33A6E /* CategoryDetailsControllerDelegate.swift in Sources */,
 				FB1B5352264D153500270263 /* SceneDelegate.swift in Sources */,
 			);
@@ -569,6 +577,16 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
+		88A4802A28D4881F0013C52E /* LoansDataBase.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				88A4802B28D4881F0013C52E /* LoansDataBase.xcdatamodel */,
+			);
+			currentVersion = 88A4802B28D4881F0013C52E /* LoansDataBase.xcdatamodel */;
+			path = LoansDataBase.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
 		FB1B5358264D153500270263 /* CoreDataTest.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (

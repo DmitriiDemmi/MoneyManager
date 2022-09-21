@@ -77,4 +77,35 @@ func setupData() {
             print("error")
         }
     }
+    
+    let context = CoreDataService.shared.persistentContainer(for: .loans).viewContext
+    let myLoans = NSEntityDescription.insertNewObject(forEntityName: "LoansCategory", into: context) as! LoansCategory
+    myLoans.categoryID = LoanCategories.loans.rawValue
+    myLoans.title = "Я взял"
+    
+    let myCredits = NSEntityDescription.insertNewObject(forEntityName: "LoansCategory", into: context) as! LoansCategory
+    myCredits.categoryID = LoanCategories.credits.rawValue
+    myCredits.title = "Я дал"
+    
+    let person = NSEntityDescription.insertNewObject(forEntityName: "LoansPerson", into: context) as! LoansPerson
+    person.amount = 1000
+    
+    let person2 = NSEntityDescription.insertNewObject(forEntityName: "LoansPerson", into: context) as! LoansPerson
+    person2.personID = UUID()
+    person2.category = myLoans
+    person2.name = "Наталья"
+    person2.amount = 20
+    
+    let person3 = NSEntityDescription.insertNewObject(forEntityName: "LoansPerson", into: context) as! LoansPerson
+    person3.personID = UUID()
+    person3.category = myCredits
+    person3.name = "Игорь"
+    person3.amount = 500
+    
+    do {
+        try context.save()
+    } catch {
+        print("error")
+    }
+    
 }
