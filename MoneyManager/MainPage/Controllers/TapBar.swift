@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class TabBarController: UITabBarController {
  
@@ -14,6 +15,7 @@ class TabBarController: UITabBarController {
         
         let mainPageVC = UINavigationController(rootViewController: CollectionView())
         let hisctoryOfOperation = UINavigationController(rootViewController: HistoryOfOperationsController())
+        let loansViewController = UIHostingController(rootView: LoansView().environment(\.managedObjectContext, CoreDataService.shared.persistentContainer(for: .loans).viewContext))
         
         mainPageVC.title = "Категории"
         mainPageVC.tabBarItem.image = UIImage(systemName: "house")
@@ -21,7 +23,10 @@ class TabBarController: UITabBarController {
         hisctoryOfOperation.title = "История"
         hisctoryOfOperation.tabBarItem.image = UIImage(systemName: "list.bullet")
         
-        viewControllers = [mainPageVC, hisctoryOfOperation]
+        loansViewController.title = "Долги"
+        loansViewController.view.backgroundColor = .white
+        
+        viewControllers = [mainPageVC, hisctoryOfOperation, loansViewController]
         
         let fontAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16.0)]
         UITabBarItem.appearance().setTitleTextAttributes(fontAttributes, for: .normal)

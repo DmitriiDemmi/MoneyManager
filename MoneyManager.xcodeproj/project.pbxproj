@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		886B453528D9CC3000FE1385 /* CreateLoanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B453428D9CC3000FE1385 /* CreateLoanView.swift */; };
+		886B453728D9ECFD00FE1385 /* LoanCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B453628D9ECFD00FE1385 /* LoanCategories.swift */; };
 		88A4802928D486450013C52E /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A4802828D486450013C52E /* CoreDataService.swift */; };
 		88A4802C28D4881F0013C52E /* LoansDataBase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 88A4802A28D4881F0013C52E /* LoansDataBase.xcdatamodeld */; };
+		88A4802E28D48E460013C52E /* LoansView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A4802D28D48E460013C52E /* LoansView.swift */; };
 		C89D0E9228C2275800720A9E /* EasyPeasy in Frameworks */ = {isa = PBXBuildFile; productRef = C89D0E9128C2275800720A9E /* EasyPeasy */; };
 		FB0EF7AB2667860300F2F802 /* CategoryDetailsControllerHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0EF7AA2667860300F2F802 /* CategoryDetailsControllerHeader.swift */; };
 		FB1B5350264D153500270263 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1B534F264D153500270263 /* AppDelegate.swift */; };
@@ -43,8 +46,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		886B453428D9CC3000FE1385 /* CreateLoanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLoanView.swift; sourceTree = "<group>"; };
+		886B453628D9ECFD00FE1385 /* LoanCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoanCategories.swift; sourceTree = "<group>"; };
 		88A4802828D486450013C52E /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		88A4802B28D4881F0013C52E /* LoansDataBase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LoansDataBase.xcdatamodel; sourceTree = "<group>"; };
+		88A4802D28D48E460013C52E /* LoansView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoansView.swift; sourceTree = "<group>"; };
 		FB0EF7AA2667860300F2F802 /* CategoryDetailsControllerHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDetailsControllerHeader.swift; sourceTree = "<group>"; };
 		FB1B534C264D153500270263 /* MoneyManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoneyManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB1B534F264D153500270263 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -98,6 +104,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		88A1D19328CB1E4E004D54C7 /* Loans */ = {
+			isa = PBXGroup;
+			children = (
+				88A4802D28D48E460013C52E /* LoansView.swift */,
+				886B453428D9CC3000FE1385 /* CreateLoanView.swift */,
+				886B453628D9ECFD00FE1385 /* LoanCategories.swift */,
+			);
+			path = Loans;
+			sourceTree = "<group>";
+		};
 		FB1B5343264D153400270263 = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +139,7 @@
 				FB841AC6266E69160079A45E /* MainPage */,
 				FB841ACA266E6A030079A45E /* HistoryOfOperations */,
 				FB999A4A2667801D005EDDAE /* CategoryDetails */,
+				88A1D19328CB1E4E004D54C7 /* Loans */,
 				FB841AC4266E67010079A45E /* Resources */,
 			);
 			path = MoneyManager;
@@ -343,6 +360,7 @@
 			files = (
 				FB999A4426666695005EDDAE /* HistoryOfOperationsSectionHeader.swift in Sources */,
 				FBA6722D2653FD3D00E795CF /* Transaction+CoreDataProperties.swift in Sources */,
+				88A4802E28D48E460013C52E /* LoansView.swift in Sources */,
 				FB841AD8266E9CF10079A45E /* TextField.swift in Sources */,
 				FBA6722F2653FD3D00E795CF /* Category+CoreDataClass.swift in Sources */,
 				FBA672312653FD3D00E795CF /* Section+CoreDataProperties.swift in Sources */,
@@ -353,6 +371,7 @@
 				FB1B535A264D153500270263 /* CoreDataTest.xcdatamodeld in Sources */,
 				FBA43ED52652632B005F4E96 /* AddAmountController.swift in Sources */,
 				FB1B5354264D153500270263 /* HistoryOfOperationsController.swift in Sources */,
+				886B453528D9CC3000FE1385 /* CreateLoanView.swift in Sources */,
 				FB1B5350264D153500270263 /* AppDelegate.swift in Sources */,
 				FBB0FEBC26550D630002C086 /* FirstLaunchData.swift in Sources */,
 				FBA43ED126526270005F4E96 /* CategoryDetailsController.swift in Sources */,
@@ -362,6 +381,7 @@
 				FB0EF7AB2667860300F2F802 /* CategoryDetailsControllerHeader.swift in Sources */,
 				FBA672322653FD3D00E795CF /* Section+CoreDataClass.swift in Sources */,
 				FB999A482666A547005EDDAE /* CollectionViewSectionHeader.swift in Sources */,
+				886B453728D9ECFD00FE1385 /* LoanCategories.swift in Sources */,
 				FBA672302653FD3D00E795CF /* Transaction+CoreDataClass.swift in Sources */,
 				FBA43ECC26525FAE005F4E96 /* CollectionViewCell.swift in Sources */,
 				FB39BF9A266EA1E100699717 /* CollectionViewDataSource.swift in Sources */,
@@ -429,7 +449,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -484,7 +504,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -502,7 +522,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9Y66J9QQD7;
 				INFOPLIST_FILE = "$(SRCROOT)/MoneyManager/Resources/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -522,7 +542,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9Y66J9QQD7;
 				INFOPLIST_FILE = "$(SRCROOT)/MoneyManager/Resources/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
