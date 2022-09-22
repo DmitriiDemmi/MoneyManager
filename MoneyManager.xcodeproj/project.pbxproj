@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C84F98A828DA2704003B3F27 /* NotificationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84F98A728DA2704003B3F27 /* NotificationsService.swift */; };
 		C860446128CB39A400B54E13 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C860446028CB39A400B54E13 /* Utils.swift */; };
 		C860446328CB39B700B54E13 /* MonthYearPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C860446228CB39B700B54E13 /* MonthYearPicker.swift */; };
 		C860446628CB3B7800B54E13 /* ChangeDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C860446528CB3B7800B54E13 /* ChangeDateView.swift */; };
@@ -49,6 +50,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C84F98A728DA2704003B3F27 /* NotificationsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsService.swift; sourceTree = "<group>"; };
 		C860446028CB39A400B54E13 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		C860446228CB39B700B54E13 /* MonthYearPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonthYearPicker.swift; sourceTree = "<group>"; };
 		C860446528CB3B7800B54E13 /* ChangeDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeDateView.swift; sourceTree = "<group>"; };
@@ -110,6 +112,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C84F98A628DA2704003B3F27 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				C84F98A728DA2704003B3F27 /* NotificationsService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		C860445F28CB39A400B54E13 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,6 +178,7 @@
 		FB1B534E264D153500270263 /* MoneyManager */ = {
 			isa = PBXGroup;
 			children = (
+				C84F98A628DA2704003B3F27 /* Services */,
 				C8EFF51928C7392B002FBB8E /* Balance */,
 				FB841AC3266E66DB0079A45E /* Aplication */,
 				FB1FA6D9264D292A0072B8FA /* CoreDataModel */,
@@ -394,6 +405,7 @@
 			files = (
 				FB999A4426666695005EDDAE /* HistoryOfOperationsSectionHeader.swift in Sources */,
 				FB841AD8266E9CF10079A45E /* TextField.swift in Sources */,
+				C84F98A828DA2704003B3F27 /* NotificationsService.swift in Sources */,
 				FBA672312653FD3D00E795CF /* Section+CoreDataProperties.swift in Sources */,
 				FBE3F4E5266F5EEF00A33A6E /* Calculator.swift in Sources */,
 				C88A7E6128C7722A00E325A9 /* Transaction+CoreDataClass.swift in Sources */,
