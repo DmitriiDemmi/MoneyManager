@@ -40,6 +40,7 @@ struct CreateLoanView: View {
                 Spacer()
             }
             .padding(.horizontal, 24)
+            .padding(.vertical, 16)
         }
         .navigationTitle(
             Text("Добавить долг")

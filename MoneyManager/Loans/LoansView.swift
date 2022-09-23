@@ -13,22 +13,30 @@ struct LoansView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     
     @FetchRequest(
-//        entity: LoansCategory.entity(),
+        //        entity: LoansCategory.entity(),
         sortDescriptors: [
             NSSortDescriptor(keyPath: \LoansCategory.categoryID, ascending: true)
-        ]
+        ],
+        animation: .default
     ) var sections: FetchedResults<LoansCategory>
     
     var body: some View {
-        ContentView(categories: sections.compactMap{$0}) { (category, name, amount, returnDate, image, enableNotification) in
-            saveLoan(category, name, amount, returnDate, image, enableNotification)
-            guard enableNotification else { return }
-            NotificationsService.scheduleNotification(
-                date: returnDate,
-                title: notificationTitle(for: category),
-                body: notificationBody(for: category, personName: name, amount: amount)
-            ) { _ in }
-        }
+        ContentView(
+            categories: sections.compactMap {$0},
+            addPerson: { category, name, amount, returnDate, image, enableNotification in
+                saveLoan(category, name, amount, returnDate, image, enableNotification)
+                guard enableNotification else { return }
+                NotificationsService.scheduleNotification(
+                    date: returnDate,
+                    title: notificationTitle(for: category),
+                    body: notificationBody(for: category, personName: name, amount: amount)
+                ) { _ in }
+            },
+            removePerson: { person in
+                managedObjectContext.delete(person)
+                CoreDataService.shared.saveContext(for: .loans)
+            }
+        )
     }
     
     func createLoan(_ category: LoanCategories, _ name: String, _ amount: NSDecimalNumber, _ returnDate: Date, _ image: Data?, _ enableNotification: Bool) -> LoansPerson {
@@ -67,6 +75,7 @@ private struct ContentView: View {
     @State var categories: [LoansCategory]
     
     var addPerson: ((_ category: LoanCategories, _ name: String, _ amount: NSDecimalNumber, _ returnDate: Date, _ image: Data?, _ enableNotification: Bool) -> Void)?
+    var removePerson: ((_ person: LoansPerson) -> Void)?
     
     var body: some View {
         NavigationView {
@@ -78,8 +87,11 @@ private struct ContentView: View {
                             GridItem(.adaptive(minimum: 74, maximum: 94))
                         ]) {
                             if let persons = category.persons?.array as? [LoansPerson] {
-                                ForEach(persons, id: \.personID) {
-                                    PersonView(person: $0)
+                                ForEach(persons, id: \.personID) { person in
+                                    PersonView(person: person)
+                                        .contextMenu {
+                                            Button("Удалить долг") { removePerson?(person) }
+                                        }
                                 }
                             }
                         }
@@ -91,7 +103,6 @@ private struct ContentView: View {
             .toolbar { NavigationBarView(addPersonDelegate: addPerson) }
         }
     }
-    
 }
 
 private struct NavigationBarView: View {
@@ -155,8 +166,8 @@ private struct PersonView: View {
                 .foregroundColor(Color(.sRGB, red: 56/255, green: 58/255, blue: 209/255, opacity: 1))
                 .font(.footnote.weight(.medium))
         }
-        .padding(.top, 8)
-        .padding(.bottom, 20)
+        .padding(8)
+        .padding(.bottom, 8)
     }
     
     func format(_ number: NSNumber?) -> String {
@@ -237,6 +248,6 @@ struct LoansView_Previews: PreviewProvider {
         
         return ContentView(categories: [
             myLoans, myCredits
-        ]) { (category, name, amount, returnDate, image, enableNotification) in }
+        ])
     }
 }
