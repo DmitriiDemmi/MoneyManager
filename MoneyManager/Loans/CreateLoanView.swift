@@ -10,15 +10,14 @@ import CoreData
 
 struct CreateLoanView: View {
     
-    @State var loanAmount: String = ""
-    @State var personName: String = ""
-    @State var returnDate: Date = Date()
-    @State var imageData: Data?
-    
-    @State var enableNotification = false
-    
-    @State var showErrorAlert = false
-    @State var error: NSError?
+    @State private var loanAmount: String = ""
+    @State private var personName: String = ""
+    @State private var returnDate: Date = Date()
+    @State private var imageData: Data?
+    @State private var enableNotification = false
+    @State private var invalidFields: Set<FormView.FocusedField> = []
+    @State private var showErrorAlert = false
+    @State private var error: NSError?
     
     var addPersonDelegate: ((_ category: LoanCategories, _ name: String, _ amount: NSDecimalNumber, _ returnDate: Date, _ image: Data?, _ enableNotification: Bool) -> Void)?
     
@@ -29,12 +28,21 @@ struct CreateLoanView: View {
                     loanAmount: $loanAmount,
                     personName: $personName,
                     returnDate: $returnDate,
-                    enableNotification: $enableNotification
+                    enableNotification: $enableNotification,
+                    invalidFields: $invalidFields
                 )
                 Spacer().frame(width: 0, height: 72)
                 HStack(spacing: 15) {
-                    ActionButton(title: "Я дал") { addPersonDelegate?(.credits, personName, 0, returnDate, imageData, enableNotification) }
-                    ActionButton(title: "Я взял") { addPersonDelegate?(.loans, personName, 0, returnDate, imageData, enableNotification) }
+                    ActionButton(title: "Я дал") {
+                        guard validateFields() else { return }
+                        addPersonDelegate?(.credits, personName, NSDecimalNumber(string: loanAmount), returnDate, imageData, enableNotification)
+                        
+                    }
+                    ActionButton(title: "Я взял") {
+                        guard validateFields() else { return }
+                        addPersonDelegate?(.loans, personName, NSDecimalNumber(string: loanAmount), returnDate, imageData, enableNotification)
+                        
+                    }
                 }
                 Spacer()
             }
@@ -43,6 +51,20 @@ struct CreateLoanView: View {
         .navigationTitle(
             Text("Добавить долг")
         )
+    }
+    
+    func validateFields() -> Bool {
+        var isValid = true
+        invalidFields = []
+        if personName.isEmpty {
+            isValid = false
+            invalidFields.insert(.personName)
+        }
+        if loanAmount.isEmpty, NSDecimalNumber(string: loanAmount) == NSDecimalNumber.notANumber {
+            isValid = false
+            invalidFields.insert(.loanAmount)
+        }
+        return isValid
     }
     
 }
@@ -81,11 +103,14 @@ private struct FormView: View {
     @Binding var returnDate: Date
     @Binding var enableNotification: Bool
     
+    @Binding var invalidFields: Set<FocusedField>
+    
     var body: some View {
         VStack(spacing: 36) {
-            FieldView(id: .loanAmount, plaсeholder: "Сумма долга", value: $loanAmount, focusedState: _focusedState)
+            FieldView(id: .loanAmount, plaсeholder: "Сумма долга", value: $loanAmount, invalidFields: $invalidFields, focusedState: _focusedState)
                 .onSubmit { focusedState = .personName }
-            FieldView(id: .personName, plaсeholder: "ФИО", value: $personName, focusedState: _focusedState)
+                .keyboardType(.decimalPad)
+            FieldView(id: .personName, plaсeholder: "ФИО", value: $personName, invalidFields: $invalidFields, focusedState: _focusedState)
                 .onSubmit { focusedState = nil }
             
             DatePicker(selection: $returnDate, in: Date()..., displayedComponents: [.date, .hourAndMinute]) {
@@ -115,12 +140,20 @@ private struct FieldView: View {
     var id: FormView.FocusedField
     @State var plaсeholder: String
     @Binding var value: String
+    @Binding var invalidFields: Set<FormView.FocusedField>
     @FocusState var focusedState: FormView.FocusedField?
     
     var body: some View {
         ZStack(alignment: .leading) {
             SwiftUI.TextField("", text: $value)
+                .onChange(of: value) { newValue in
+                    if focusedState == id {
+                        invalidFields.remove(id)
+                    }
+                }
                 .textFieldStyle(DSRoundedRectangleTextFieldStyle())
+                .background(invalidFields.contains(id) ? Color.red.opacity(0.54) : Color(.sRGB, red: 245/255, green: 245/255, blue: 245/255, opacity: 1))
+                .clipShape(RoundedRectangle(cornerRadius: 12))
                 .focused($focusedState, equals: id)
             if value.isEmpty {
                 Text(plaсeholder)
@@ -140,8 +173,6 @@ struct DSRoundedRectangleTextFieldStyle: TextFieldStyle {
         configuration
             .padding(.vertical, 20)
             .padding(.horizontal, 16)
-            .background(Color(.sRGB, red: 245/255, green: 245/255, blue: 245/255, opacity: 1))
-            .cornerRadius(12)
     }
     
 }
