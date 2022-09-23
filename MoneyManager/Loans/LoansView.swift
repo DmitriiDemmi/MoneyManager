@@ -22,6 +22,12 @@ struct LoansView: View {
     var body: some View {
         ContentView(categories: sections.compactMap{$0}) { (category, name, amount, returnDate, image, enableNotification) in
             saveLoan(category, name, amount, returnDate, image, enableNotification)
+            guard enableNotification else { return }
+            NotificationsService.scheduleNotification(
+                date: returnDate,
+                title: notificationTitle(for: category),
+                body: notificationBody(for: category, personName: name, amount: amount)
+            ) { _ in }
         }
     }
     
@@ -39,6 +45,20 @@ struct LoansView: View {
         let person = createLoan(category, name, amount, returnDate, image, enableNotification)
         person.category = sections.first(where: { $0.categoryID == category.rawValue})
         CoreDataService.shared.saveContext(for: .loans)
+    }
+    
+    func notificationTitle(for category: LoanCategories) -> String {
+        switch category {
+        case .loans: return "Напоминание о задолженности"
+        case .credits: return "Напоминание о долге"
+        }
+    }
+    
+    func notificationBody(for category: LoanCategories, personName: String, amount: NSDecimalNumber) -> String {
+        switch category {
+        case .loans: return "\(personName) ждет от вас \(amount.stringValue)"
+        case .credits: return "\(personName) обещал(-а) вернуть \(amount.stringValue)"
+        }
     }
 }
 
