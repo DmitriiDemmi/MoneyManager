@@ -70,6 +70,36 @@ struct LoansView: View {
     }
 }
 
+private struct PlaceholderView: View {
+    var addPersonDelegate: ((_ category: LoanCategories, _ name: String, _ amount: NSDecimalNumber, _ returnDate: Date, _ image: Data?, _ enableNotification: Bool) -> Void)?
+    
+    var body: some View {
+        NavigationView {
+            VStack(spacing: 16) {
+                Image("loans-placeholder")
+                Spacer().frame(width: 0, height: 64)
+                Text("Здесь пока пусто")
+                    .font(.title3.weight(.semibold))
+                Text("Добавьте сумму своего долга или ссуды, чтобы вести учёт.")
+                    .multilineTextAlignment(.center)
+                    .font(.body)
+                    .foregroundColor(.black.opacity(0.54))
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 4)
+                Spacer().frame(width: 0, height: 32)
+                NavigationLink(
+                    destination: { CreateLoanView(addPersonDelegate: addPersonDelegate) },
+                    label: { ActionButtonLabel(title: "Добавить") }
+                )
+                .padding(.horizontal, 80)
+            }
+            .padding(.horizontal, 24)
+            .navigationBarHidden(true)
+            .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+}
+
 private struct ContentView: View {
     
     @State var categories: [LoansCategory]
@@ -78,29 +108,33 @@ private struct ContentView: View {
     var removePerson: ((_ person: LoansPerson) -> Void)?
     
     var body: some View {
-        NavigationView {
-            ScrollView(.vertical) {
-                VStack {
-                    ForEach(categories, id: \.title) { (category) in
-                        HeaderView(text: category.title)
-                        LazyVGrid(columns: [
-                            GridItem(.adaptive(minimum: 74, maximum: 94))
-                        ]) {
-                            if let persons = category.persons?.array as? [LoansPerson] {
-                                ForEach(persons, id: \.personID) { person in
-                                    PersonView(person: person)
-                                        .contextMenu {
-                                            Button("Удалить долг") { removePerson?(person) }
-                                        }
+        if categories.compactMap({ $0.persons?.array.isEmpty }).contains(true) {
+            PlaceholderView(addPersonDelegate: addPerson)
+        } else {
+            NavigationView {
+                ScrollView(.vertical) {
+                    VStack {
+                        ForEach(categories, id: \.title) { (category) in
+                            HeaderView(text: category.title)
+                            LazyVGrid(columns: [
+                                GridItem(.adaptive(minimum: 74, maximum: 94))
+                            ]) {
+                                if let persons = category.persons?.array as? [LoansPerson] {
+                                    ForEach(persons, id: \.personID) { person in
+                                        PersonView(person: person)
+                                            .contextMenu {
+                                                Button("Удалить долг") { removePerson?(person) }
+                                            }
+                                    }
                                 }
                             }
+                            .padding(.horizontal, 24)
                         }
-                        .padding(.horizontal, 24)
                     }
                 }
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar { NavigationBarView(addPersonDelegate: addPerson) }
             }
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar { NavigationBarView(addPersonDelegate: addPerson) }
         }
     }
 }

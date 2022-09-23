@@ -34,8 +34,8 @@ struct CreateLoanView: View {
                 )
                 Spacer().frame(width: 0, height: 72)
                 HStack(spacing: 15) {
-                    ActionButton(title: "Я дал") { action(for: .credits) }
-                    ActionButton(title: "Я взял") { action(for: .loans) }
+                    Button { action(for: .credits) } label: { ActionButtonLabel(title: "Я дал") }
+                    Button { action(for: .loans) } label: { ActionButtonLabel(title: "Я взял") }
                 }
                 Spacer()
             }
@@ -69,28 +69,6 @@ struct CreateLoanView: View {
     
 }
 
-private struct ActionButton: View {
-    
-    @State var title: String
-    var action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            HStack {
-                Spacer()
-                Text(title)
-                    .font(.body.weight(.semibold))
-                    .foregroundColor(.white)
-                    .padding(15)
-                Spacer()
-            }
-            .background(Color(.sRGB, red: 56/255, green: 58/255, blue: 209/255, opacity: 1))
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-        }
-        .buttonStyle(PlainButtonStyle())
-    }
-}
-
 private struct FormView: View {
     
     enum FocusedField {
@@ -118,7 +96,7 @@ private struct FormView: View {
                     .font(.body)
                     .foregroundColor(.black.opacity(0.54))
             }
-//            .datePickerStyle(GraphicalDatePickerStyle())
+            //            .datePickerStyle(GraphicalDatePickerStyle())
             
             .padding(.horizontal, 16)
             .padding(.vertical, 20)
