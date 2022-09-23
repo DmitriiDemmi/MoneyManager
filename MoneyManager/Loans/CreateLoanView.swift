@@ -10,6 +10,7 @@ import CoreData
 
 struct CreateLoanView: View {
     
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var loanAmount: String = ""
     @State private var personName: String = ""
     @State private var returnDate: Date = Date()
@@ -33,16 +34,8 @@ struct CreateLoanView: View {
                 )
                 Spacer().frame(width: 0, height: 72)
                 HStack(spacing: 15) {
-                    ActionButton(title: "Я дал") {
-                        guard validateFields() else { return }
-                        addPersonDelegate?(.credits, personName, NSDecimalNumber(string: loanAmount), returnDate, imageData, enableNotification)
-                        
-                    }
-                    ActionButton(title: "Я взял") {
-                        guard validateFields() else { return }
-                        addPersonDelegate?(.loans, personName, NSDecimalNumber(string: loanAmount), returnDate, imageData, enableNotification)
-                        
-                    }
+                    ActionButton(title: "Я дал") { action(for: .credits) }
+                    ActionButton(title: "Я взял") { action(for: .loans) }
                 }
                 Spacer()
             }
@@ -51,6 +44,12 @@ struct CreateLoanView: View {
         .navigationTitle(
             Text("Добавить долг")
         )
+    }
+    
+    func action(for category: LoanCategories) {
+        guard validateFields() else { return }
+        addPersonDelegate?(category, personName, NSDecimalNumber(string: loanAmount), returnDate, imageData, enableNotification)
+        presentationMode.wrappedValue.dismiss()
     }
     
     func validateFields() -> Bool {
